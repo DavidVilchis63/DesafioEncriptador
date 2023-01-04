@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang = "es">
+
+<head>
+     <meta charset = "UTF-8">
+     <title> Encriptador de texto </title>
+     <link rel="stylesheet" href="reset.css">
+     <link rel="Stylesheet" href="style.css">
+     <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+        
+</head>
+
+<body>
+    <header>
+        <div class="caja">
+            <h1><img src="banner/Logo.png" alt="LogoAlura"></h1>
+        </div>
+    </header>
+    
+    <main>
+        <section class="principal">
+            <div class="rectangulo">
+                <img class="imarec" src="banner/Muñeco.png" alt="imagen muñeco con diamante">
+                <div class="textoEncrip">
+                    <h4>Ningún mensaje fue encontrado</h4>
+                    <p>Ingrese el texto que desea encriptar o desencriptar</p>                    
+                </div>
+                <div class="textoEncriptado1">
+                    <p id="parrafoFinal"></p>
+                </div>  
+                <div class="botonCopiar">
+                    <button class="btCopiar">Copiar</button>
+                </div>                
+            </div>
+            
+            <div class="cuadroTexto">
+                <textarea name="textoEncri" placeholder="Ingrese el texto aqui"></textarea>
+            </div>
+
+            <div class="advertencia">
+                <img class="advertenciaImg" src="banner/bi_exclamation-circle-fill.png" alt="signo advertencia">
+                <p>Solo letras minusculas y sin acentos</p>
+            </div>
+
+            <div class="cajaBotones">                
+                <button class="btEncriptar">Encriptar</button>
+                <button class="btDesencriptar">Desencriptar</button>
+            </div>
+            
+        </section>
+
+        
+    </main>
+
+    <footer>
+        <div class="piePagina">
+            <h3>Elaborada por: David Vilchis</h3>
+        </div>  
+    </footer>
+
+</body>
+
+<script>
+
+    function ocultar() {
+        var imagen = document.querySelector(".imarec");
+        var texto = document.querySelector(".textoEncrip");
+        imagen.style.display = "none";
+        texto.style.display = "none";
+    }    
+
+    var botonOcultar = document.querySelector(".btEncriptar");
+    botonOcultar.addEventListener("click",ocultar)
+
+    var encriptar = document.querySelector(".btEncriptar")
+    var textoEncri1 = document.querySelector("textarea[name='textoEncri']")
+    var textoIngresado = "";
+
+    function guardarTexto(){        
+        textoIngresado = textoEncri1.value;
+        console.log("texto: ", textoIngresado)
+    }
+
+    var botonGuardar = document.querySelector(".btEncriptar");
+    botonGuardar.addEventListener("click",guardarTexto)
+
+    var tabla = {
+        "a":"ai",
+        "b":"enter",
+        "i":"imes",
+        "o":"ober",
+        "u":"ufat"
+    }
+
+    var textoFinal = "";    
+
+    function encriptarTexto(){
+                
+        for (let i = 0; i < textoIngresado.length; i++){
+
+            var caracter = textoIngresado[i];
+
+            if (tabla.hasOwnProperty(caracter)){
+                textoFinal += tabla[caracter];
+            }
+            else {
+                textoFinal += caracter;
+            }
+        } 
+        
+        var parrafo = document.getElementById("parrafoFinal");    
+        parrafo.innerHTML = textoFinal; 
+             
+    }
+
+    var botonEncriptar = document.querySelector(".btEncriptar");
+    botonEncriptar.addEventListener("click",encriptarTexto);
+
+    function aparecer(){
+        var ejemplo =document.getElementById("parrafoFinal");
+        ejemplo.style.display = "block";
+        
+    }    
+    
+    var botonAparecer = document.querySelector(".btEncriptar");
+    botonAparecer.addEventListener("click",aparecer)    
+
+    // Desincriptador
+
+    var botonOcultar1 = document.querySelector(".btDesencriptar");
+    botonOcultar1.addEventListener("click",ocultar)
+
+    var botonAparecer1 = document.querySelector(".btDesencriptar");
+    botonAparecer1.addEventListener("click",aparecer)
+
+    var botonGuardar1 = document.querySelector(".btDesencriptar");
+    botonGuardar1.addEventListener("click",guardarTexto)
+
+    function DesencriptarTexto(){
+
+        var texto = textoIngresado;
+                
+        var textCifrado = texto.replace(/enter/igm,"e")
+        var textCifrado = textCifrado.replace(/ober/igm,"o")
+        var textCifrado = textCifrado.replace(/imes/igm,"i")
+        var textCifrado = textCifrado.replace(/ai/igm,"a")
+        var textCifrado = textCifrado.replace(/ufat/igm,"u")
+                        
+        var parrafo = document.getElementById("parrafoFinal");    
+        parrafo.innerHTML = textCifrado; 
+                     
+    }
+
+    var botonDesencriptar = document.querySelector(".btDesencriptar");
+    botonDesencriptar.addEventListener("click",DesencriptarTexto);
+
+    //Funcion para copiar texto
+
+    function copiarPortapapeles() {
+
+        var copiado = document.querySelector("#parrafoFinal").textContent
+        navigator.clipboard
+        .writeText(copiado)        
+        alert("Texto copiado")
+    }
+
+    var botonCopiar = document.querySelector(".btCopiar");
+    botonCopiar.addEventListener("click",copiarPortapapeles);
+
+</script>
